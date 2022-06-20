@@ -1,0 +1,14 @@
+h1, p {
+    text-align: center;
+}
+
+#tabuleiro{
+    display:flex;
+    flex-wrap: wrap;
+    width: 520px;
+    margin: auto;
+}
+
+img{
+    width: 130px;
+}
