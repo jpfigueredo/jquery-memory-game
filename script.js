@@ -69,7 +69,7 @@ const deck = [
 
 deck.sort(() => {
     return 0.5 - Math.random();
-})
+});
 
 const tabuleiro = document.querySelector("#tabuleiro");
 let escolhidas = [];
@@ -80,7 +80,7 @@ let pontos;
 function criarTabuleiro(){
     pontos = 0;
     pontuacao.innerHTML = pontos;
-    for(let i=0; i<deck.length;i++){
+    for(let i=0; i < deck.length; i++){
         let carta = document.createElement("img");
         carta.id = i;
         carta.nome = deck[i].nome;
@@ -117,7 +117,7 @@ function escolherCarta(){
         if(pontos == deck.length/2){
             window.alert("Você ganhou!");
             tabuleiro.innerHTML = "";
-            criartabuleiro();
+            criarTabuleiro();
         }
 
     }

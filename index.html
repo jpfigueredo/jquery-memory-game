@@ -5,14 +5,14 @@
     <link rel="stylesheet" href="style.css" />
     <title>Jogo da Memória</title>
   </head>
-  <body onload="criarTabuleiro()">
+  <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     
     <h1>Jogo da Memória</h1>
     
     <p>Pontos: <span id="pontuacao"></span></p>
     
-    <div id="tabuleiro"></div>
+    <div id="tabuleiro" onload="criarTabuleiro()"></div>
     
     <script src="script.js" charset="utf8"></script>
   </body>
