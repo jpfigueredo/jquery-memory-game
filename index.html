@@ -5,15 +5,17 @@
     <link rel="stylesheet" href="style.css" />
     <title>Jogo da Memória</title>
   </head>
-  <body>
+  <body onload="mostrarTabuleiro()">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     
     <h1>Jogo da Memória</h1>
     
     <p>Pontos: <span id="pontuacao"></span></p>
     
-    <div id="tabuleiro" onload="criarTabuleiro()"></div>
-    
+    <button id="cronometro" onclick='inicia()'>Iniciar Jogo!</button>
+
+    <div id="tabuleiro"></div>
+
     <script src="script.js" charset="utf8"></script>
   </body>
 </html>

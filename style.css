@@ -1,5 +1,12 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
 h1, p {
     text-align: center;
+    color: black;
 }
 
 #tabuleiro{
@@ -9,6 +16,27 @@ h1, p {
     margin: auto;
 }
 
+#tabuleiroVerso{
+    display: flex;
+    flex-wrap: wrap;
+    width: 520px;
+    margin: auto;
+}
+
 img{
     width: 130px;
+    perspective: 1000;
+    transform-style: preserve-3d;
+}
+
+img:hover{ 
+    transform: rotateY(0deg); 
+}
+
+.tempos{
+    
+}
+
+.btn{
+    display:flex;
 }

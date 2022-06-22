@@ -1,41 +1,39 @@
-var imagens = ['img/facebook.png','img/android.png','img/chrome.png','img/firefox.png','img/html5.png','img/googleplus.png','img/twitter.png','img/windows.png','img/cross.png'];
-
 const deck = [
     {
         nome:"facebook",
-        img:'img/facebook.png'
+        img:'img/facebook.png',
     },
     {
         nome:"android",
-        img:'img/android.png'
+        img:'img/android.png',
     },
     {
         nome:"chrome",
-        img:'img/chrome.png'
+        img:'img/chrome.png',
     },
     {
         nome:"firefox",
-        img:'img/firefox.png'
+        img:'img/firefox.png',
     },
     {
         nome:"html5",
-        img:'img/html5.png'
+        img:'img/html5.png',
     },
     {
         nome:"googleplus",
-        img:'img/googleplus.png'
+        img:'img/googleplus.png',
     },
     {
         nome:"twitter",
-        img:'img/twitter.png'
+        img:'img/twitter.png',
     },
     {
         nome:"windows",
-        img:'img/windows.png'
+        img:'img/windows.png',
     },
     {
         nome:"facebook",
-        img:'img/facebook.png'
+        img:'img/facebook.png',
     },
     {
         nome:"android",
@@ -43,27 +41,27 @@ const deck = [
     },
     {
         nome:"chrome",
-        img:'img/chrome.png'
+        img:'img/chrome.png',
     },
     {
         nome:"firefox",
-        img:'img/firefox.png'
+        img:'img/firefox.png',
     },
     {
         nome:"html5",
-        img:'img/html5.png'
+        img:'img/html5.png',
     },
     {
         nome:"googleplus",
-        img:'img/googleplus.png'
+        img:'img/googleplus.png',
     },
     {
         nome:"twitter",
-        img:'img/twitter.png'
+        img:'img/twitter.png',
     },
     {
         nome:"windows",
-        img:'img/windows.png'
+        img:'img/windows.png',
     }
 ];
 
@@ -72,24 +70,46 @@ deck.sort(() => {
 });
 
 const tabuleiro = document.querySelector("#tabuleiro");
-let escolhidas = [];
-
 const pontuacao = document.querySelector("#pontuacao");
+let inicio;
+let escolhidas = [];
+let tempoCronometrado;
+let temposCronometrados = [];
 let pontos;
+
+function mostrarTabuleiro(){
+    pontos = 0;
+    pontuacao.innerHTML = pontos;
+    for(let i=0; i < deck.length; i++){
+        var carta = document.createElement("img");
+        carta.id = i;
+        carta.className = "mostrarCartas";
+        carta.nome = deck[i].nome;
+        carta.src = "img/cross.png";
+        tabuleiro.appendChild(carta);
+    }
+}
+
 
 function criarTabuleiro(){
     pontos = 0;
     pontuacao.innerHTML = pontos;
-    for(let i=0; i < deck.length; i++){
-        let carta = document.createElement("img");
-        carta.id = i;
-        carta.nome = deck[i].nome;
-        carta.src = "img/cross.png";
-        
-        carta.addEventListener("click", escolherCarta);
+    setTimeout(() => {
+        for(let i=0; i < deck.length; i++){
+            let carta = document.createElement("img");
+            carta.id = i;
+            carta.nome = deck[i].nome;
+            carta.src = "img/cross.png";
+            
+            $(carta).click(function () {
+                $(carta).fadeOut();
+                $(carta).fadeIn();
+            });
 
-        tabuleiro.appendChild(carta);
-    }
+            carta.addEventListener("click", escolherCarta);
+            tabuleiro.appendChild(carta);
+        }
+    }, 500);
 }
 
 function escolherCarta(){
@@ -101,7 +121,7 @@ function escolherCarta(){
         setTimeout(() => {
             let carta1 = escolhidas[0];
             let carta2 = escolhidas[1];
-            if(carta1.name == carta2.name){
+            if(carta1.nome === carta2.nome){
                 carta1.src = "img/white.png";
                 carta2.src = "img/white.png";
                 carta1.removeEventListener("click", escolherCarta);
@@ -109,16 +129,33 @@ function escolherCarta(){
                 pontos++;
                 pontuacao.innerHTML = pontos;
             }else{
-                carta1.src = "img/cross.png";
-                carta2.src = "img/cross.png";
+                carta1.src = 'img/cross.png';
+                carta2.src = 'img/cross.png';
             }
-        },1000);
-        
-        if(pontos == deck.length/2){
-            window.alert("Você ganhou!");
-            tabuleiro.innerHTML = "";
-            criarTabuleiro();
-        }
 
+            if(pontos == deck.length/2){
+                tempoDecorrido();
+                window.alert("Você ganhou!");
+                deck.innerHTML = "";
+                criarTabuleiro();
+            }
+            escolhidas = [];
+        }, 1000);
     }
+}
+
+function tempoDecorrido() {
+    var fim = Date.now();
+    var tempo = fim - inicio;
+    alert("fim de jogo, o tempo foi de: " + tempo);
+    temposCronometrados.push(tempo);
+    temposCronometrados.sort();
+    listaMelhorTempo();
+  }
+  
+function listaMelhorTempo() {
+    let tempos = document.createElement("div");
+    localStorage.setItem("itens", JSON.stringify(temposCronometrados));
+    tempos.innerHTML = JSON.parse(localStorage.getItem("itens"));
+    document.getElementsByClassName("tempos").appendChild(tempos);
 }
