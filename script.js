@@ -71,25 +71,12 @@ deck.sort(() => {
 
 const tabuleiro = document.querySelector("#tabuleiro");
 const pontuacao = document.querySelector("#pontuacao");
+const btn = document.querySelector("#btnIniciar");
 let inicio;
 let escolhidas = [];
 let tempoCronometrado;
 let temposCronometrados = [];
 let pontos;
-
-function mostrarTabuleiro(){
-    pontos = 0;
-    pontuacao.innerHTML = pontos;
-    for(let i=0; i < deck.length; i++){
-        var carta = document.createElement("img");
-        carta.id = i;
-        carta.className = "mostrarCartas";
-        carta.nome = deck[i].nome;
-        carta.src = "img/cross.png";
-        tabuleiro.appendChild(carta);
-    }
-}
-
 
 function criarTabuleiro(){
     pontos = 0;
@@ -100,17 +87,28 @@ function criarTabuleiro(){
             carta.id = i;
             carta.nome = deck[i].nome;
             carta.src = "img/cross.png";
-            
-            $(carta).click(function () {
-                $(carta).fadeOut();
-                $(carta).fadeIn();
-            });
-
-            carta.addEventListener("click", escolherCarta);
             tabuleiro.appendChild(carta);
         }
     }, 500);
 }
+
+//  ouvir btn, se clicado, libera os addEventListener
+$(btn).click(function () {
+    for (let i = 0 ; i <= deck.length ; i++) {
+        let carta = document.querySelector('img');
+        carta.addEventListener("click", escolherCarta);
+        // $(card).click(function () {
+        //     $(carta).fadeOut(2000, function(){
+        //         $this.css('border', 'solid red 2px');
+        //     });
+        //     $(carta).fadeIn(2000, function(){
+        //         $this.css('border', 'solid red 2px');
+        //     });
+        // });
+    }
+
+});
+
 
 function escolherCarta(){
     let carta = this;

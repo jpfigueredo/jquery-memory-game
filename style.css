@@ -1,7 +1,7 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+    padding: 5px;
+    margin: 5px;
+    /* box-sizing: border-box; */
   }
 
 h1, p {
@@ -9,19 +9,16 @@ h1, p {
     color: black;
 }
 
-#tabuleiro{
-    display:flex;
-    flex-wrap: wrap;
-    width: 520px;
-    margin: auto;
+/* .card.back, .card.front {
+border: solid 4px #272;
+border-radius: 12px
 }
-
-#tabuleiroVerso{
-    display: flex;
-    flex-wrap: wrap;
-    width: 520px;
-    margin: auto;
-}
+.card.back {
+background: url('img/cross.png');
+} 
+.card.front {
+border-color: #472a09;
+} */
 
 img{
     width: 130px;
@@ -37,6 +34,10 @@ img:hover{
     
 }
 
-.btn{
-    display:flex;
+#btnIniciar{
+    align-self: center;
+    margin: 5px;
+    padding: 5px;
+    font-size: 16px;
+    height: 100%;
 }
