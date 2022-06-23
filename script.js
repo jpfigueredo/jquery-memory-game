@@ -1,66 +1,66 @@
 const deck = [
     {
-        nome:"facebook",
+        name:"facebook",
         img:'img/facebook.png',
     },
     {
-        nome:"android",
+        name:"android",
         img:'img/android.png',
     },
     {
-        nome:"chrome",
+        name:"chrome",
         img:'img/chrome.png',
     },
     {
-        nome:"firefox",
+        name:"firefox",
         img:'img/firefox.png',
     },
     {
-        nome:"html5",
+        name:"html5",
         img:'img/html5.png',
     },
     {
-        nome:"googleplus",
+        name:"googleplus",
         img:'img/googleplus.png',
     },
     {
-        nome:"twitter",
+        name:"twitter",
         img:'img/twitter.png',
     },
     {
-        nome:"windows",
+        name:"windows",
         img:'img/windows.png',
     },
     {
-        nome:"facebook",
+        name:"facebook",
         img:'img/facebook.png',
     },
     {
-        nome:"android",
+        name:"android",
         img:'img/android.png'
     },
     {
-        nome:"chrome",
+        name:"chrome",
         img:'img/chrome.png',
     },
     {
-        nome:"firefox",
+        name:"firefox",
         img:'img/firefox.png',
     },
     {
-        nome:"html5",
+        name:"html5",
         img:'img/html5.png',
     },
     {
-        nome:"googleplus",
+        name:"googleplus",
         img:'img/googleplus.png',
     },
     {
-        nome:"twitter",
+        name:"twitter",
         img:'img/twitter.png',
     },
     {
-        nome:"windows",
+        name:"windows",
         img:'img/windows.png',
     }
 ];
@@ -85,88 +85,84 @@ let lockBoard = false;
 $(btn).click(function () {
     const cards = document.querySelectorAll(".card");
     cards.forEach(card => card.addEventListener("click", virarCarta));
-        // $(carta).click(function () {
-        //     $(carta).fadeOut(2000, function(){
-        //         $this.css('border', 'solid red 2px');
-        //     });
-        //     $(carta).fadeIn(2000, function(){
-        //         $this.css('border', 'solid red 2px');
-        //     });
-        // });
-    });
+});
 
 
 function criarTabuleiro(){
     pontos = 0;
     pontuacao.innerHTML = pontos;
-    setTimeout(() => {
-        for(let i=0; i<= deck.length; i++){
-            let divCarta = document.createElement("div");
-            divCarta.className = "card";
+    for(let i=0; i<= deck.length; i++){
+        let divCarta = document.createElement("div");
+        divCarta.className = "card";
+        divCarta.id = i;
+        divCarta.setAttribute("data-framework", deck[i].name);
 
-            let carta = document.createElement("img");
-            carta.className = "cardFront";
-            carta.nome = deck[i].nome;
-            carta.src = deck[i].img;
+        let carta = document.createElement("img");
+        carta.className = "cardFront";
+        carta.nome = deck[i].name;
+        carta.src = deck[i].img;
 
-            let cartaVerso = document.createElement("img");
-            cartaVerso.className = "cardBack";
-            cartaVerso.src = "img/cross.png";
-            
-            divCarta.appendChild(carta);
-            divCarta.appendChild(cartaVerso);
-            
-            tabuleiro.appendChild(divCarta);
-
-            divCarta.classList.toggle(`data-framework=${deck[i].nome}`);
-        }
-
-    }, 500);
+        let cartaVerso = document.createElement("img");
+        cartaVerso.className = "cardBack";
+        cartaVerso.src = "img/cross.png";
+        
+        divCarta.appendChild(carta);
+        divCarta.appendChild(cartaVerso);
+        tabuleiro.appendChild(divCarta);
+    }
 }
 function virarCarta(){
+    if(lockBoard) return;
+    if(this === firstCard) return;
+
     this.classList.toggle('flip');
 
     if(!hasFlippedCard){
-        // first click
         hasFlippedCard = true;
         firstCard = this;
-    } else{
-        hasFlippedCard = false;
-        secondCard = this;
+        return;
     }
-
-    if(firstCard.dataset.framework === secondCard.dataset.framework){
-        firstCard.removeEventListener("click", virarCarta);
-        secondCard.removeEventListener("click", virarCarta);
-
-    }else{
-        setTimeout(() => {
-            firstCard.classList.remove('flip');
-            secondCard.classList.remove('flip');
-        }, 1500);
-    }
-    escolherCarta();
+    secondCard = this;
+    validaCarta();
 }
 
-function escolherCarta(){
+function validaCarta(){
     let isMatch = firstCard.dataset.framework === secondCard.dataset.framework;
-    isMatch ? disableCards() : unflipCards();
+    isMatch ? countCards() : unflipCards();
+}
+
+function countCards(){
+    firstCard.src = "img/white.png";
+    secondCard.src = "img/white.png";
+    pontos++;
+    pontuacao.innerHTML = pontos;
+    disableCards();
 }
 
 function disableCards() {
     firstCard.removeEventListener("click", virarCarta);
     secondCard.removeEventListener("click", virarCarta);
+    resetBoard();
 }
 
 function unflipCards() {
     lockBoard = true;
 
     setTimeout(() => {
-      firstCard.classList.remove('flip');
-      secondCard.classList.remove('flip');
-  
-      lockBoard = false;
-    }, 1500);  
+        firstCard.classList.remove('flip');
+        secondCard.classList.remove('flip');
+        resetBoard();
+    }, 1000);  
+}
+
+function resetBoard(){
+    [hasFlippedCard, lockBoard] = [false, false];
+    [firstCard, secondCard] = [null, null];
+    setTimeout(() =>{
+        if(pontos == deck.length/2){
+            windows.alert("Fim de Jogo!\nVocê ganhou!")
+        }
+    }, 1000);
 }
 
 function tempoDecorrido() {
@@ -175,10 +171,10 @@ function tempoDecorrido() {
     alert("fim de jogo, o tempo foi de: " + tempo);
     temposCronometrados.push(tempo);
     temposCronometrados.sort();
-    listaMelhorTempo();
+    melhorTempo();
   }
   
-function listaMelhorTempo() {
+function melhorTempo() {
     let tempos = document.createElement("div");
     localStorage.setItem("itens", JSON.stringify(temposCronometrados));
     tempos.innerHTML = JSON.parse(localStorage.getItem("itens"));

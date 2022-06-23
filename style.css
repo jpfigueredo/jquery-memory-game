@@ -35,9 +35,9 @@ p{
     margin: 5px;
     position: relative;
     transform: scale(1);
-    box-shadow: 1px 1px 1px rgba(0,0,0,.3);
     transform-style: preserve-3d;
     transition: transform .5s;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.3);
 }
 
 .card:active{
@@ -58,15 +58,13 @@ p{
     border-radius: 5px;
     backface-visibility: hidden;
 }
-.cardBack {
-    /* background: url('img/cross.png'); */
-} 
+
 .cardFront {
-    border-color: #472a09;
     transform: rotateY(180deg);
 }
 
 #btnIniciar{
+    height: auto;
     align-self: center;
     margin: 5px;
     padding: 5px;
