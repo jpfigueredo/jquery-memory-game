@@ -95,9 +95,9 @@ function criarTabuleiro(){
 //  ouvir btn, se clicado, libera os addEventListener
 $(btn).click(function () {
     for (let i = 0 ; i <= deck.length ; i++) {
-        let carta = document.querySelector('img');
+        // let carta = document.querySelector('img'); esse queryselector tem q ser do id=0..15
         carta.addEventListener("click", escolherCarta);
-        // $(card).click(function () {
+        // $(carta).click(function () {
         //     $(carta).fadeOut(2000, function(){
         //         $this.css('border', 'solid red 2px');
         //     });
@@ -114,7 +114,9 @@ function escolherCarta(){
     let carta = this;
     carta.src = deck[carta.id].img;
     escolhidas.push(carta);
-
+    if(escolhidas.length == 3){
+        return null;
+    }
     if(escolhidas.length == 2){
         setTimeout(() => {
             let carta1 = escolhidas[0];
