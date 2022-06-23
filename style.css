@@ -1,37 +1,69 @@
 * {
-    padding: 5px;
-    margin: 5px;
-    /* box-sizing: border-box; */
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
   }
+
+body{
+    height: 100vh;
+    display:flex;
+    background-color: grey;
+}
 
 h1, p {
     text-align: center;
     color: black;
 }
 
-/* .card.back, .card.front {
-border: solid 4px #272;
-border-radius: 12px
+p{
+    font-size: 40px;
 }
-.card.back {
-background: url('img/cross.png');
-} 
-.card.front {
-border-color: #472a09;
-} */
 
-img{
-    width: 130px;
-    perspective: 1000;
+/* mem-game */
+#tabuleiro{
+    width:640px;
+    height: 640px;
+    margin:auto;
+    display: flex;
+    flex-wrap: wrap;
+    perspective: 1000px;
+}
+/* mem-card */
+.card{
+    width: calc(25% - 10px);
+    height: calc(33.333% - 10px);
+    margin: 5px;
+    position: relative;
+    transform: scale(1);
+    box-shadow: 1px 1px 1px rgba(0,0,0,.3);
     transform-style: preserve-3d;
+    transition: transform .5s;
 }
 
-img:hover{ 
-    transform: rotateY(0deg); 
+.card:active{
+    transform: scale(0.97);
+    transition: transform .2s;
 }
 
-.tempos{
-    
+.card.flip{
+    transform: rotateY(180deg);
+}
+
+ .cardBack, 
+ .cardFront {
+    width:100%;
+    height:100%;
+    padding: 20px;
+    position:absolute;
+    border-radius: 5px;
+    backface-visibility: hidden;
+}
+.cardBack {
+    /* background: url('img/cross.png'); */
+} 
+.cardFront {
+    border-color: #472a09;
+    transform: rotateY(180deg);
 }
 
 #btnIniciar{
@@ -39,5 +71,4 @@ img:hover{
     margin: 5px;
     padding: 5px;
     font-size: 16px;
-    height: 100%;
 }

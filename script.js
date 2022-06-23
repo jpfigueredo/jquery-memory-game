@@ -77,26 +77,13 @@ let escolhidas = [];
 let tempoCronometrado;
 let temposCronometrados = [];
 let pontos;
-
-function criarTabuleiro(){
-    pontos = 0;
-    pontuacao.innerHTML = pontos;
-    setTimeout(() => {
-        for(let i=0; i < deck.length; i++){
-            let carta = document.createElement("img");
-            carta.id = i;
-            carta.nome = deck[i].nome;
-            carta.src = "img/cross.png";
-            tabuleiro.appendChild(carta);
-        }
-    }, 500);
-}
+let hasFlippedCard = false;
+let firstCard, secondCard;
 
 //  ouvir btn, se clicado, libera os addEventListener
 $(btn).click(function () {
-    for (let i = 0 ; i <= deck.length ; i++) {
-        // let carta = document.querySelector('img'); esse queryselector tem q ser do id=0..15
-        carta.addEventListener("click", escolherCarta);
+    const cards = document.querySelectorAll(".card");
+    cards.forEach(card => card.addEventListener("click", virarCarta));
         // $(carta).click(function () {
         //     $(carta).fadeOut(2000, function(){
         //         $this.css('border', 'solid red 2px');
@@ -105,11 +92,45 @@ $(btn).click(function () {
         //         $this.css('border', 'solid red 2px');
         //     });
         // });
+    });
+
+
+function criarTabuleiro(){
+    pontos = 0;
+    pontuacao.innerHTML = pontos;
+    setTimeout(() => {
+        for(let i=0; i<= deck.length; i++){
+            let divCarta = document.createElement("div");
+            divCarta.className = "card";
+    
+            let carta = document.createElement("img");
+            carta.className = "cardFront";
+            carta.nome = deck[i].nome;
+            carta.src = deck[i].img;
+
+            let cartaVerso = document.createElement("img");
+            cartaVerso.className = "cardBack";
+            cartaVerso.src = "img/cross.png";
+            
+            divCarta.appendChild(carta);
+            divCarta.appendChild(cartaVerso);
+            
+            tabuleiro.appendChild(divCarta);
+        }
+    }, 500);
+}
+function virarCarta(){
+    this.classList.toggle('flip');
+
+    if(!hasFlippedCard){
+        // first click
+        hasFlippedCard = true;
+        firstCard = this;
+        console.log(hasFlippedCard, firstCard);
     }
 
-});
-
-
+    escolherCarta();
+}
 function escolherCarta(){
     let carta = this;
     carta.src = deck[carta.id].img;
@@ -140,7 +161,7 @@ function escolherCarta(){
                 criarTabuleiro();
             }
             escolhidas = [];
-        }, 1000);
+        }, 1500);
     }
 }
 
